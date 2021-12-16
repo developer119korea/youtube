@@ -1,25 +1,29 @@
 class Youtube {
-  constructor(baseUrl, serviceKey) {
-    this.baseUrl = baseUrl;
-    this.serviceKey = serviceKey;
-    this.getRequestOptions = {
-      method: 'GET',
-      redirect: 'follow'
-    };
+  constructor(httpClient) {
+    this.httpClient = httpClient;
   }
 
   async mostPopular() {
-    const response = await fetch(`${this.baseUrl}/videos?part=snippet&chart=mostPopular&maxResults=25&key=${this.serviceKey}`,
-      this.getRequestOptions);
-    const result = await response.json();
-    return result.items;
+    const response = await this.httpClient.get('videos', {
+      params: {
+        part: 'snippet',
+        chart: 'mostPopular',
+        maxResults: 25,
+      }
+    });
+    return response.data.items;
   }
 
   async search(query) {
-    const response = await fetch(`${this.baseUrl}/search?part=snippet&maxResults=25&q=${query}&type=video&key=${this.serviceKey}`,
-      this.getRequestOptions);
-    const result = await response.json();
-    return result.items.map(item => ({ ...item, id: item.id.videoId }));
+    const response = await this.httpClient.get('search', {
+      params: {
+        part: 'snippet',
+        q: query,
+        type: 'video',
+        maxResults: 25,
+      }
+    });
+    return response.data.items.map(item => ({ ...item, id: item.id.videoId }));
   }
 }
 
