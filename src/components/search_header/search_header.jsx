@@ -13,7 +13,6 @@ const SearchHeader = ({ onSearch }) => {
   };
 
   const onKeyPress = (event) => {
-    console.log('onKeyPress');
     if (event.key === 'Enter') {
       handleSearch();
     }

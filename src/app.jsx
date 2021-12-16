@@ -26,7 +26,7 @@ function App({ youtube }) {
     youtube
       .mostPopular()
       .then(vidoes => setVideos(vidoes));
-  }, []);
+  }, [youtube]);
 
   return (
     <div className={styles.app} >

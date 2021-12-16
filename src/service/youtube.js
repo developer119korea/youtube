@@ -19,7 +19,7 @@ class Youtube {
     const response = await fetch(`${this.baseUrl}/search?part=snippet&maxResults=25&q=${query}&type=video&key=${this.serviceKey}`,
       this.getRequestOptions);
     const result = await response.json();
-    return result.items.map(item => ({ ...item, id: item.videoId }));
+    return result.items.map(item => ({ ...item, id: item.id.videoId }));
   }
 }
 
